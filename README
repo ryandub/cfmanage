@@ -1,0 +1,13 @@
+Usage: ./cfmanage.sh USERNAME APIKEY [COMMAND] [ARGS]
+COMMAND:
+list [CONTAINER] -----> List objects in container or if no container specified, list all containers.
+create [CONTAINER] -----> Create a container.
+upload [CONTAINER] [FILE] ([REMOTE FILE]) -----> Upload file to specified container as (optional) specified filename.
+get [CONTAINER] [FILE] -----> Download file from specified container to current directory.
+delete [CONTAINER] [FILE] -----> Delete specified container (if empty) or file.
+usage -----> Shows your CloudFiles usage statistics.
+
+CDN COMMANDS:
+cdn_list : List containers that are CDN enabled (only containers, not files - API limitation)
+cdn_get_uri CONTAINER : Get the public URI for the CDN enabled container
+cdn_edge_purge CONTAINER [FILE] [email addr]: Purge a CONTAINER from the edge server before the TTL experation. optional email address to notify when files are purged
