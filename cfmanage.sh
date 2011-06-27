@@ -64,18 +64,18 @@ function f_grabauthtoken() {
     fi
 
     if echo "$result" | grep -q 'HTTP/1.1 204 No Content'; then 
-       #echo "We're authenticated"
+    #   echo "We're authenticated"
        echo -n
     else
        echo "Authentication failure"
        exit 1
     fi
 
-    STORAGEURL=`echo "$result" | grep 'X-Storage-Url' | sed 's/X-Storage-Url: //' | sed 's/\r//'`
-    STORAGETOKEN=`echo "$result" | grep 'X-Storage-Token' | sed 's/X-Storage-Token: //' | sed 's/\r//'`
-    CDNMANURL=`echo "$result" | grep 'X-CDN-Management-Url' | sed 's/X-CDN-Management-Url: //' | sed 's/\r//'`
-    AUTHTOKEN=`echo "$result" | grep 'X-Auth-Token' | sed 's/X-Auth-Token: //' | sed 's/\r//'`
-    SRVMGNTURL=`echo "$result" | grep 'X-Server-Management-Url' | sed 's/X-Server-Management-Url: //' | sed 's/\r//'`
+    STORAGEURL=`echo "$result" | grep 'X-Storage-Url' | sed 's/X-Storage-Url: //' | tr -d '\r'`
+    STORAGETOKEN=`echo "$result" | grep 'X-Storage-Token' | sed 's/X-Storage-Token: //' | tr -d '\r'`
+    CDNMANURL=`echo "$result" | grep 'X-CDN-Management-Url' | sed 's/X-CDN-Management-Url: //' | tr -d '\r'`
+    AUTHTOKEN=`echo "$result" | grep 'X-Auth-Token' | sed 's/X-Auth-Token: //' | tr -d '\r'`
+    SRVMGNTURL=`echo "$result" | grep 'X-Server-Management-Url' | sed 's/X-Server-Management-Url: //' | tr -d '\r'`
 }  
 
 # Show authentication variables
