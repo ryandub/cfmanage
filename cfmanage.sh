@@ -1,10 +1,10 @@
 #!/bin/bash
 #
 # File:         cfmanage.sh
-# Version:      1.4
+# Version:      1.5
 # Written by:   Ryan Walker
 # Contributors: Ryan Cleere
-# Date:         05/19/2010
+# Date:         07/11/2011
 #
 # Script to list, create containers, upload objects, and delete objects/containers for Rackspace CloudFiles.
 # Based on cf-list.sh by Tim Galyean
