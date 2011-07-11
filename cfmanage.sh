@@ -195,9 +195,9 @@ function f_get_cdn_uri() {
     if echo ${RESPONSE} | grep -q 404 ; then
         echo "Container not found"
     elif echo ${RESPONSE} | grep -q 204 ; then
-        echo "$RESPONSE" | grep 'X-CDN-URI: ' | sed 's/X-CDN-URI: //' | sed 's/\r//'
+        echo "$RESPONSE" | grep 'X-CDN-URI: ' | sed 's/X-CDN-URI: //'
     else
-        echo "$RESPONSE" | sed 's/\r//'
+        echo "$RESPONSE"
     fi
 
 }
