@@ -10,7 +10,7 @@
 # Based on cf-list.sh by Tim Galyean
 #
 ##################################################
- 
+
 USER="${1}"
 APIKEY="${2}"
 CMD="${3}"
@@ -51,19 +51,19 @@ function f_exec() {
     echo "Please specify a valid command"
   fi
 }
- 
+
 # Grab API Authentication Token, and Storage URL
 function f_grabauthtoken() {
     RETVAL=0
     result=`curl -i -s -H "X-Auth-User: ${USER}" -H "X-Auth-Key: ${APIKEY}" https://auth.api.rackspacecloud.com/v1.0`
     RETVAL=$?
-    
+
     if [ "$RETVAL" != 0 ]; then
         echo "curl error, exiting"
         exit $RETVAL
     fi
 
-    if echo "$result" | grep -q 'HTTP/1.1 204 No Content'; then 
+    if echo "$result" | grep -q 'HTTP/1.1 204 No Content'; then
     #   echo "We're authenticated"
        echo -n
     else
@@ -76,7 +76,7 @@ function f_grabauthtoken() {
     CDNMANURL=`echo "$result" | grep 'X-CDN-Management-Url' | sed 's/X-CDN-Management-Url: //' | tr -d '\r'`
     AUTHTOKEN=`echo "$result" | grep 'X-Auth-Token' | sed 's/X-Auth-Token: //' | tr -d '\r'`
     SRVMGNTURL=`echo "$result" | grep 'X-Server-Management-Url' | sed 's/X-Server-Management-Url: //' | tr -d '\r'`
-}  
+}
 
 # Show authentication variables
 function f_showauth() {
@@ -86,7 +86,7 @@ function f_showauth() {
     echo "AUTHTOKEN: $AUTHTOKEN"
     echo "SERVMGNTURL: $SRVMGNTURL"
 }
- 
+
 # List Containers
 function f_list() {
     CURL="curl -s -H"
@@ -103,7 +103,7 @@ function f_create () {
         echo "The '${OBJECT}' container was created successfully."
     else
         echo ${RESPONSE}
-    fi 
+    fi
 }
 
 # Uploads a file to a container
@@ -145,7 +145,7 @@ function f_delete () {
     fi
 }
 
-#Downloads a file from a container 
+#Downloads a file from a container
 function f_get () {
     CURL_TEST="curl -s -I -H"
     CURL_GET="curl --progress-bar -O -H"
@@ -166,7 +166,7 @@ function f_list_cdn() {
     ${CURL} "X-Auth-Token: ${STORAGETOKEN}" $CDNMANURL/${OBJECT}
 }
 
-# Get the URL for a CDN enabled containers 
+# Get the URL for a CDN enabled containers
 function f_get_cdn_uri() {
     CURL="curl -s -I -H"
     if [ -z ${OBJECT} ]; then
@@ -184,7 +184,7 @@ function f_get_cdn_uri() {
 
 }
 
-# Get the URL for a CDN enabled containers 
+# Get the URL for a CDN enabled containers
 function f_get_cdn_uri() {
     CURL="curl -s -I -H"
     if [ -z ${OBJECT} ]; then
@@ -203,7 +203,7 @@ function f_get_cdn_uri() {
 }
 
 
-# Get the URL for a CDN enabled containers 
+# Get the URL for a CDN enabled containers
 function f_cdn_edge_purge() {
     #$NEW_FILE
     EMAIL=""
@@ -216,7 +216,7 @@ function f_cdn_edge_purge() {
     # figure out if we have a file or email address specified
     # this logic might not work out if no email address is specified but a file with an '@' in it is
     if [ -n ${FILE} ] && echo ${FILE} | grep -q '@'; then
-        # file is nonzero length and has a '@' in the name 
+        # file is nonzero length and has a '@' in the name
         EMAILADDR=${FILE}
         EMAIL="-H X-Purge-Email: ${FILE}"
         # zero FILE out so it doesnt get used as a file
@@ -225,7 +225,7 @@ function f_cdn_edge_purge() {
 	EMAILADDR=${NEW_FILE}
         EMAIL="-H X-Purge-Email: ${NEW_FILE}"
     fi
-        
+
     RESPONSE=`${CURL_POST} "X-Auth-Token: ${STORAGETOKEN}" ${EMAIL} $CDNMANURL/${OBJECT}/${FILE}`
     if echo ${RESPONSE} | grep -q 404 ; then
         echo "Container/File not found"
